@@ -1,0 +1,17 @@
+<br>
+<h3>Stocks</h3>
+<br>
+<div class='search-area'>
+  <%= form_tag search_stock_path, remote: true, method: :get do %>
+  <div class="form-group row">
+    <div class="col-sm-6  no-right-padding">
+      <%= text_field_tag :stock, params[:stock] , placeholder: 'Stock ticker...', autofocus: true, class: 'form-control form-control-lg', style: 'border-radius: 10px 0px 0px 10px;'%>
+    </div>
+    <div class="col-sm-3  no-left-padding ">
+      <%= submit_tag 'Search' , class: 'btn btn-success', style: 'height: 48px; width: 92px; border-radius: 0px 10px 10px 0px;' %>
+    </div>
+  </div>
+  <%end%>
+
+      <div id="results"></div>
+</div>
