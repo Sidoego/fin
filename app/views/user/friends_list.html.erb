@@ -1,0 +1,70 @@
+<div class="card col-sm-10" style="">
+  <h5 class="card-title" style="margin-top:20px">Your friends:</h5>
+  <div class="card-body">
+    <table class="table table-hover " style="text-align: center;">
+
+      <tbody>
+
+        <% if @friends_me%>
+        <thead>
+            <tr>
+            <th scope="col">They track you</th>
+            <th scope="col">Action</th>
+
+            </tr>
+        </thead>
+          <% @friends_me.each do |friend| %>
+            <tr>
+              <td class="align-middle">
+                <%= link_to friend_path(user: friend.user), method: :get do %>
+                <%=friend.user.email%>
+              <%end%>
+            </td>
+            <td>
+              <%= link_to friendships_path(user: current_user, email: friend.user.email), class:"btn btn-success", style:"width:42px", method: :post do %>
+              <%=fa_icon 'plus'%>
+              <%end%>
+              </td>
+          </tr>
+        <%end%>
+      <%end%>
+      <% if @friends_i%>
+      <thead>
+          <tr>
+          <th scope="col">You track them</th>
+          <th scope="col">Action</th>
+          </tr>
+      </thead>
+        <% @friends_i.each do |friend| %>
+          <tr>
+            <td class="align-middle"><%= link_to friend_path(user: friend.friend), method: :get do %>
+              <%=friend.friend.email%>
+            <%end%>
+          </td>
+          <td class="align-middle">
+            <%= link_to friendship_path(friend), class:"btn btn-danger",style:"width:42px", type:'button', method: :delete do %>
+              <%=fa_icon 'trash'%>
+            <%end%>
+          </td>
+        </tr>
+      <%end%>
+    <%end%>
+  </tbody>
+</table>
+
+<div class='search-area'>
+  <%= form_tag search_friend_path, remote: true, method: :get do %>
+  <div class="form-group row">
+    <div class="col-sm-11  no-right-padding">
+      <%= text_field_tag :email, params[:email] , placeholder: 'User email....', autofocus: true, class: 'form-control form-control-lg', style: 'border-radius: 10px 0px 0px 10px;'%>
+    </div>
+    <div class="col-sm-1  no-left-padding ">
+      <%= button_tag type: :submit, class: 'btn btn-success', style: 'height: 48px; width: 61.5px; border-radius: 0px 10px 10px 0px;' do%>
+      <%=fa_icon 'search'%>
+    <%end%>
+  </div>
+</div>
+<%end%>
+
+  <div id="friend_results" style="margin-top: 10px;margin-bottom: 10px;"></div>
+</div>

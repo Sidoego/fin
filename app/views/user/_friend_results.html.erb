@@ -1,0 +1,52 @@
+<div class="col-sm-10 no-left-padding no-right-padding">
+<%= render 'layouts/messages'%>
+</div>
+<% if @user %>
+
+    <div class="res col-sm-12 rb10" >
+      <table class="table table-borderless " style="text-align: center; margin-bottom: 0px;">
+          <% @user.each do |user|%>
+          <% if user != current_user%>
+          <tr>
+            <td class="align-middle"><%=user.email%></td>
+
+            <td class="align-middle">
+              <% if user.has_friend(current_user) && current_user.has_friend(user) %>
+              Mate
+              <%else%>
+              <% if current_user.has_friend(user)%>
+              You are tracking him
+
+              <%end%>
+              <% if user.has_friend(current_user)%>
+              He is tracking you
+
+              <%end%>
+              <%end%>
+
+              </td>
+             <td class="align-middle" style="width:160px">
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <%= link_to friend_path(user: user), class:"btn btn-primary", type:'button',style:"width:42px", method: :get do%>
+                  <%=fa_icon 'edit'%>
+                <%end%>
+                <%if !current_user.has_friend(user)%>
+                  <%= link_to friendships_path(user: current_user, email: user.email), class:"btn btn-success", style:"width:42px", method: :post do %>
+                  <%=fa_icon 'plus'%>
+                  <%end%>
+                <%else%>
+                  <%= link_to friendship_path(user), class:"btn btn-danger", style:"width:42px", method: :delete do %>
+                  <%=fa_icon 'trash'%>
+                  <%end%>
+                <%end%>
+
+
+               </div>
+
+            </td>
+          </tr>
+          <%end%>
+          <%end%>
+      </table>
+    </div>
+<%end%>

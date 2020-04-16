@@ -1,0 +1,27 @@
+<div class="col-sm-10 no-left-padding no-right-padding">
+<%= render 'layouts/messages'%>
+</div>
+<% if @stock %>
+    <div class="card card-header res col-sm-10 rb10" >
+      <table class="table table-borderless " style="text-align: center; margin-bottom: 0px;">
+          <tr>
+            <td class="align-middle"><b>Ticker:</b> <%=@stock.ticker%></td>
+            <td class="align-middle"><b>Company name:</b> <%=@stock.name%></td>
+            <td class="align-middle"><b>Price:</b> <%=@stock.last_price%></td>
+            <td class="align-middle" style="width:160px">
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <%= link_to stock_path(ticker: @stock.ticker), class:"btn btn-primary", type:'button',style:"width:42px", method: :get do %>
+                  <%=fa_icon 'edit'%>
+                <%end%>
+
+                <%= link_to user_stocks_path(user: current_user, ticker: @stock.ticker), class:"btn btn-success", style:"width:42px", method: :post do %>
+                <%=fa_icon 'shopping-basket'%>
+                <%end%>
+
+               </div>
+
+            </td>
+          </tr>
+      </table>
+    </div>
+<%end%>

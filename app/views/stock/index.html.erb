@@ -1,17 +1,52 @@
 <br>
-<h3>Stocks</h3>
+<h3>Stock: <%=@stock.name%></h3>
+<h4>Ticker: <%=@stock.ticker%></h4>
+<h4>Last price: <%=@stock.last_price%></h4>
 <br>
-<div class='search-area'>
-  <%= form_tag search_stock_path, remote: true, method: :get do %>
-  <div class="form-group row">
-    <div class="col-sm-6  no-right-padding">
-      <%= text_field_tag :stock, params[:stock] , placeholder: 'Stock ticker...', autofocus: true, class: 'form-control form-control-lg', style: 'border-radius: 10px 0px 0px 10px;'%>
+<h3>Last news:</h3>
+<div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <%=@stock.news.first['headline']%>
+        </button>
+      </h5>
     </div>
-    <div class="col-sm-3  no-left-padding ">
-      <%= submit_tag 'Search' , class: 'btn btn-success', style: 'height: 48px; width: 92px; border-radius: 0px 10px 10px 0px;' %>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        <%=@stock.news.first['summary']%>
+      </div>
     </div>
   </div>
-  <%end%>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          <%=@stock.news.second['headline']%>
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        <%=@stock.news.second['summary']%>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          <%=@stock.news.third['headline']%>
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        <%=@stock.news.third['summary']%>
 
-      <div id="results"></div>
+      </div>
+    </div>
+  </div>
 </div>

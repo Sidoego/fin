@@ -1,0 +1,61 @@
+<div class="card col-sm-10" style="">
+  <h5 class="card-title" style="margin-top:20px"><%= @user.email%>
+    is tracking now:</h5>
+  <div class="card-body">
+    <table class="table table-hover " style="text-align: center;">
+      <thead>
+        <tr>
+          <th scope="col">Ticker</th>
+          <th scope="col">Company name</th>
+          <th scope="col">Price</th>
+          <%if current_user.has_friend(@user)%>
+          <th scope="col" style="width:160px">Action</th>
+          <%end%>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tracking_stock.each do |stock| %>
+          <tr>
+            <td class="align-middle"><b><%=stock.ticker%></b></td>
+            <td class="align-middle"><%=stock.name%></td>
+            <td class="align-middle"><%=stock.last_price%></td>
+            <td>
+              <%if current_user.has_friend(@user)%>
+
+              <!-- <div class="btn-group" role="group" aria-label="Basic example"> <button type="button" class="btn btn-primary">Details</button> -->
+
+                <%if current_user.has_stock(stock)%>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <%= link_to stock_path(ticker: stock.ticker), class:"btn btn-primary",style:"width:42px", type:'button', method: :get do %>
+                    <%=fa_icon 'edit'%>
+                  <%end%>
+
+
+                   <%= link_to user_stock_path(stock), class:"btn btn-danger",style:"width:42px", type:'button', method: :delete do %>
+                     <%=fa_icon 'trash'%>
+                   <%end%>
+
+                 </div>
+                <%else%>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <%= link_to stock_path(ticker: stock.ticker), class:"btn btn-primary", type:'button',style:"width:42px", method: :get do %>
+                    <%=fa_icon 'edit'%>
+                  <%end%>
+
+                  <%= link_to user_stocks_path(user: current_user, ticker: stock.ticker), class:"btn btn-success", style:"width:42px", method: :post do %>
+                    <%=fa_icon 'shopping-basket'%>
+                  <%end%>
+                <%end%>
+                </div>
+
+            <%end%>
+            <!-- </div>-->
+
+
+          </td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+</div>
+</div>
